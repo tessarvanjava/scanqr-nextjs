@@ -21,7 +21,7 @@ function Heading() {
 
 function App() {
   return (
-    <>
+    <div>
       <Head>
         <title>Home</title>
       </Head>
@@ -35,7 +35,7 @@ function App() {
         <hr />
         <ShowAll />
       </Container >
-    </>
+    </div>
   )
 }
 

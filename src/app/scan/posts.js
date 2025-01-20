@@ -12,28 +12,24 @@ import axios from 'axios'
 import ScanIdCustomer from './idcustomer.js'
 import axiosRetry from 'axios-retry'
 
-const host = 'http://192.168.1.15'
-
 function SendPost() {
   const [idorder, setIdorder] = useState('')
   const [idcustomer, setIdCustomer] = useState('')
   const [code, setCode] = useState('')
+  const [showError,setShowError] = useState('')
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-  }
-
-  const clearTextInput = (e) => {
-    // axiosRetry(axios,{retries:3})
-    axios.post(`${host}:4000/api/scan/`, {
+    axios.post(`${process.env.host}:4000/api/scan/`, {
       data: {
         idorder, idcustomer, code
       }
-    }).then(function (response) {
+    }).then((response) => {
       console.log(response);
     })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
+        setShowError('Connection Error')
       });
     setCode('')
   }
@@ -46,7 +42,8 @@ function SendPost() {
           <Form.Control size='lg' type="text" placeholder="Enter ID Order" name='idorder' onChange={(e) => setIdorder(e.target.value)} value={idorder} /><br />
           <Form.Control size='lg' type="text" placeholder="Enter ID Customer" name='idcustomer' onChange={(e) => setIdCustomer(e.target.value)} value={idcustomer} /><br />
           <Form.Control size='lg' type="text" placeholder="Code" name='code' onChange={(e) => setCode(e.target.value)} value={code} /><br />
-          <Button variant="primary" type="submit" onClick={clearTextInput}>Submit</Button>
+          <Form.Text muted>{showError}</Form.Text><br />
+          <Button variant="primary" type="submit">Submit</Button>
         </Form.Group>
       </Form>
 

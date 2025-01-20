@@ -10,6 +10,7 @@ import axios from 'axios'
 function FormSearchByIdCustomer() {
   const [idcustomer, setIdcustomer] = useState('')
   const [datas, setDatas] = useState([])
+  const [showError,setShowError] = useState('')
 
   const handleOnSbumit = (e) => {
     e.preventDefault()
@@ -18,6 +19,7 @@ function FormSearchByIdCustomer() {
       .catch((error) => {
         if (error) {
           console.log(error)
+          setShowError('Connection Error')
         }
       })
     setIdcustomer('')
@@ -28,8 +30,9 @@ function FormSearchByIdCustomer() {
       <h4>Scan ID Customer</h4>
       <Form onSubmit={handleOnSbumit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control size='lg' type="text" placeholder="Enter ID Customer" onChange={(e) => setIdcustomer(e.target.value)} value={idcustomer} />
+          <Form.Control size='lg' type="text" placeholder="ID Customer" onChange={(e) => setIdcustomer(e.target.value)} value={idcustomer} />
         </Form.Group>
+        <Form.Text muted>{showError}</Form.Text><br />
         <Button type='submit' variant='primary'>Submit</Button><br /><br />
       </Form>
 
