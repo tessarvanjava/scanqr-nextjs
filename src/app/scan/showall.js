@@ -2,46 +2,27 @@
 
 import { Button, Container, Table, Form } from 'react-bootstrap'
 import Head from 'next/head'
-import useSWR from 'swr'
+import useSWR, { mutate, useSWRConfig } from 'swr'
 import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
 import Loading from './loading.js'
-import Error from './error.js'
 
-const host = 'http://192.168.1.15'
-
-function FormSearchByIdCustomer({ handleOnClick, handleOnChange, idcustomer }) {
-  return (
-    <>
-      <h4>Scan ID Customer</h4>
-      <Form onSubmit={(e) => e.preventDefault()}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          {/* <Form.Label>ID Customer</Form.Label> */}
-          <Form.Control size='lg' type="text" placeholder="Enter ID Customer" onChange={handleOnChange} value={idcustomer} />
-          {/* <Form.Text className="text-muted">
-            Search by Id Customers
-          </Form.Text><br /> */}
-          {/* <Button variant="primary" type="submit" onClick={handleOnClick}>Submit</Button> */}
-        </Form.Group>
-      </Form>
-      {/* <h1>{idcustomer}</h1> */}
-    </>
-  )
-}
-
-function TableScanIdCustomer({ id }) {
+function ShowAll() {
   // const fetcher = (...args) => fetch(...args).then(res => res.json())
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const url = `${host}:4000/unit/idpel/${id}` // by id customer
-  // const url = '${host}/unit/' // show all unit
+  const url = `${process.env.api}/unit`
   const { data, isError, isLoading } = useSWR(url, fetcher, {
     revalidateOnFocus: true,
-    // refreshInterval: 3000
+    // refreshInterval: 3000  
   })
 
   return (
     <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <h1>Show All</h1><Button type='submit' onClick={() => mutate(`${process.env.api}/unit`)}>Refresh Data</Button><hr />
       {isLoading ? <Loading /> :
         <Table striped bordered hover responsive>
           <thead>
@@ -72,30 +53,11 @@ function TableScanIdCustomer({ id }) {
                   <td>{item.updated_at ? moment(item.updated_at).format("dddd, LL") : ''}</td>
                 </tr>
               )
-            }) : "Still Waiting"}
+            }) : <tr><td colSpan={9}><Loading /></td></tr>}
           </tbody>
         </Table>}
     </>
   )
 }
 
-function ScanIdCustomer() {
-  const [idcustomer, setIdcustomer] = useState('0')
-
-  function handleOnClick(e) {
-    alert('Done')
-  }
-
-  function handleOnChange(e) {
-    setIdcustomer(e.target.value)
-  }
-
-  return (
-    <>
-      <FormSearchByIdCustomer handleOnClick={handleOnClick} idcustomer={idcustomer} handleOnChange={handleOnChange} />
-      <TableScanIdCustomer id={idcustomer} />
-    </>
-  )
-}
-
-export default ScanIdCustomer
+export default ShowAll
