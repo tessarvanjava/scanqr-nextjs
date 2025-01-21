@@ -6,34 +6,39 @@ import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
 import axios from 'axios'
+import ShowErrorModal from './modal.js'
 
 function FormSearchByIdCustomer() {
   const [code, setCode] = useState('')
   const [datas, setDatas] = useState([])
-  const [showError,setShowError] = useState('')
+  const [showError, setShowError] = useState('Waiting Data')
+
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleOnSbumit = (e) => {
     e.preventDefault()
     axios.get(`${process.env.api}/unit/code/${code}`)
-      .then((res) => setDatas(res.data))
+      .then((res) => {
+        setDatas(res.data)
+        setShowError(res.data.error)
+      })
       .catch((error) => {
-        if (error) {
-          console.log(error)
-          setShowError('Connection Error')
-        }
+        setShow(true)
       })
     setCode('')
   }
 
   return (
     <>
+      <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
       <h4>Scan Code</h4>
       <Form onSubmit={handleOnSbumit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control size='lg' type="text" placeholder="Code Unit" onChange={(e) => setCode(e.target.value)} value={code} />
+          <Form.Control required size='lg' type="text" placeholder="Code Unit" onChange={(e) => setCode(e.target.value)} value={code} />
         </Form.Group>
-        <Form.Text muted>{showError}</Form.Text><br />
-        <Button type='submit' variant='primary'>Submit</Button><br /><br />
+        <Button type='submit' variant='primary' size='lg'>Submit</Button><br /><br />
       </Form>
 
       <Table striped bordered hover responsive>
@@ -51,7 +56,7 @@ function FormSearchByIdCustomer() {
           </tr>
         </thead>
         <tbody>
-          {datas ? datas.map((item, index) => {
+          {datas.length >= 1 ? datas.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.id}</td>
@@ -65,7 +70,7 @@ function FormSearchByIdCustomer() {
                 <td>{item.updated_at ? moment(item.updated_at).format("dddd, LL") : ''}</td>
               </tr>
             )
-          }) : <tr><td colSpan={9}>Waiting Data</td></tr>}
+          }) : <tr><td colSpan={9}>{showError}</td></tr>}
         </tbody>
       </Table>
     </>

@@ -1,7 +1,7 @@
 module.exports = {
   env: {
-    host: 'http://192.168.1.15',
-    api: 'http://192.168.1.15:4000'
+    host: 'http://192.168.0.15',
+    api: 'http://192.168.0.15:4000'
   },
   async redirects() {
     return [

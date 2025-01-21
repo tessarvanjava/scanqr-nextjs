@@ -22,7 +22,7 @@ function ShowAll() {
       <Head>
         <title>Home</title>
       </Head>
-      <h1>Show All</h1><Button type='submit' onClick={() => mutate(`${process.env.api}/unit`)}>Refresh Data</Button><hr />
+      <h1>Show All</h1><Button size='lg' type='submit' onClick={() => mutate(`${process.env.api}/unit`)}>Refresh Data</Button><hr />
       {isLoading ? <Loading /> :
         <Table striped bordered hover responsive>
           <thead>
