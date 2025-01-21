@@ -13,7 +13,9 @@ import SendPost from './posts.js'
 function Heading() {
   return (
     <>
-      <h1>Scan QR Code Unit - Rental Barata Jaya</h1><hr />
+      <h1>Scan QR Code Unit - Rental Barata Jaya</h1>
+      <Button href='http://192.168.0.15:3000' variant='warning'>Booking Order</Button>
+      <hr />
     </>
   )
 }
