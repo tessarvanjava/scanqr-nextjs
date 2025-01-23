@@ -60,7 +60,7 @@ function ShowAll() {
             </tr>
           </thead>
           <tbody>
-            {data ? data.map((item, index) => {
+            {data.length >= 1 ? data.map((item, index) => {
               return (
                 <tr key={index}>
                   <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>Delete</Button></td>

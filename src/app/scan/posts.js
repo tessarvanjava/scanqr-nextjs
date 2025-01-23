@@ -12,10 +12,13 @@ import axios from 'axios'
 import ScanIdCustomer from './idcustomer.js'
 import axiosRetry from 'axios-retry'
 import ShowErrorModal from './modal.js'
+import { useSearchParams } from 'next/navigation'
 
 function SendPost() {
-  const [idorder, setIdorder] = useState('')
-  const [idcustomer, setIdCustomer] = useState('')
+  const params = useSearchParams()
+
+  const [idorder, setIdorder] = useState(params.get('idorder') === null ? '' : params.get('idorder'))
+  const [idcustomer, setIdCustomer] = useState(params.get('idcustomer') === null ? '' : params.get('idcustomer'))
   const [code, setCode] = useState('')
   const [showError,setShowError] = useState('')
 
@@ -25,7 +28,7 @@ function SendPost() {
   
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    axios.post(`${process.env.host}:4000/api/scan/`, {
+    axios.post(`${process.env.api}/api/scan/`, {
       data: {
         idorder, idcustomer, code
       }
