@@ -6,12 +6,8 @@ import useSWR from 'swr'
 import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
-import Loading from './loading.js'
-import Error from './error.js'
 import axios from 'axios'
-import ScanIdCustomer from './idcustomer.js'
-import axiosRetry from 'axios-retry'
-import ShowErrorModal from './modal.js'
+import ShowErrorModal from '../module/modal.js'
 import { useSearchParams } from 'next/navigation'
 
 function SendPost() {
@@ -45,7 +41,7 @@ function SendPost() {
     <>
       <ShowErrorModal handleClose={handleClose} show={show} />
       <h4>Scan QrCode</h4>
-      <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded">
+      <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded" autoComplete='off'>
         <Form.Group className="mb-3">
           <Form.Control required size='lg' type="text" placeholder="Enter ID Order" name='idorder' onChange={(e) => setIdorder(e.target.value)} value={idorder} /><br />
           <Form.Control required size='lg' type="text" placeholder="Enter ID Customer" name='idcustomer' onChange={(e) => setIdCustomer(e.target.value)} value={idcustomer} /><br />

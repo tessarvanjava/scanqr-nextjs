@@ -5,12 +5,12 @@ import Head from 'next/head'
 import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
-import ShowAll from './showall.js'
-import ScanIdCustomer from './idcustomer.js'
-import FormSearchByCode from './code.js'
-import SendPost from './posts.js'
-import FormSearchByIdOrder from './idorder.js'
-import TableOrder from '../order/order.js'
+import ShowAll from './component/showall.js'
+import ScanIdCustomer from './component/idcustomer.js'
+import FormSearchByCode from './component/code.js'
+import SendPost from './component/posts.js'
+import FormSearchByIdOrder from './component/idorder.js'
+import TableOrder from './component/order.js'
 
 function Heading() {
   return (

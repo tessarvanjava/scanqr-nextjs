@@ -6,10 +6,10 @@ import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
 import axios from 'axios'
-import ShowErrorModal from './modal.js'
+import ShowErrorModal from '../module/modal.js'
 
-function FormSearchByIdOrder() {
-  const [idorder, setIdOrder] = useState('')
+function FormSearchByCode() {
+  const [code, setCode] = useState('')
   const [datas, setDatas] = useState([])
   const [showError, setShowError] = useState('Waiting Data')
 
@@ -17,9 +17,9 @@ function FormSearchByIdOrder() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSbumit = (e) => {
     e.preventDefault()
-    axios.get(`${process.env.api}/unit/idorder/${idorder}`)
+    axios.get(`${process.env.api}/unit/code/${code}`)
       .then((res) => {
         setDatas(res.data)
         setShowError(res.data.error)
@@ -27,18 +27,17 @@ function FormSearchByIdOrder() {
       .catch((error) => {
         setShow(true)
       })
-    setIdOrder('')
+    setCode('')
   }
 
   return (
     <>
       <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
-      <h4>Scan ID Order</h4>
-      <Form onSubmit={handleOnSubmit}>
+      <h4>Scan Code</h4>
+      <Form onSubmit={handleOnSbumit} autoComplete='off'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control required size='lg' type="text" placeholder="ID Customer" onChange={(e) => setIdOrder(e.target.value)} value={idorder} />
+          <Form.Control required size='lg' type="text" placeholder="Code Unit" onChange={(e) => setCode(e.target.value)} value={code} />
         </Form.Group>
-        {/* <Form.Text muted>{showError}</Form.Text><br /> */}
         <Button type='submit' variant='primary' size='lg'>Submit</Button><br /><br />
       </Form>
 
@@ -78,4 +77,4 @@ function FormSearchByIdOrder() {
   )
 }
 
-export default FormSearchByIdOrder
+export default FormSearchByCode

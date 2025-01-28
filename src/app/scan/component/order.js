@@ -5,12 +5,30 @@ import Head from 'next/head'
 import useSWR, { mutate, useSWRConfig } from 'swr'
 import moment from 'moment'
 import 'moment/locale/id'
-import Loading from './loading.js'
+import Loading from '../module/loading.js'
 import axios from 'axios'
-import token from './token.js'
-import Link from 'next/link.js'
+import token from '../module/token.js'
 
 const fetcher = (url) => axios.get(url, { headers: { sign: token } }).then((res) => res.data.data)
+
+const returnUnitStyle = {
+  color: 'Blue',
+  fontWeight: 'Bold',
+  fontSize: '20px'
+}
+
+const returnUnit = (a) => {
+  let CurrentDate = moment().format('YYYY-MM-DD');
+  if (a === CurrentDate) {
+    return (
+      <span style={returnUnitStyle}>{moment(a).format("dddd, LL")}</span>
+    )
+  } else {
+    return (
+      <span>{moment(a).format("dddd, LL")}</span>
+    )
+  }
+}
 
 function AlertDelete() {
   return (
@@ -59,9 +77,9 @@ function TableOrder() {
               <td>{item.nama}</td>
               <td>{item.status_bayar}</td>
               <td><a style={{ color: 'black' }} href={`/scan?idorder=${item.id_pemesanan}&idcustomer=${item.id_pelanggan}`}>{item.unit}</a></td>
-              <td>{moment(item.ambil_tgl).format("dddd, LL")}</td>
+              <td>{returnUnit(item.ambil_tgl)}</td>
               <td>{item.ambil_jam}</td>
-              <td>{moment(item.kembali_tgl).format("dddd, LL")}</td>
+              <td>{returnUnit(item.kembali_tgl)}</td>
               <td>{item.kembali_jam}</td>
             </tr>
           )}
