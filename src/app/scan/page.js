@@ -17,7 +17,7 @@ function Heading() {
   return (
     <>
       <h1>Scan QR Code Unit - Rental Barata Jaya</h1>
-      <Button href={`${process.env.host}`} variant='warning'>Booking Order</Button>
+      <Button href={`${process.env.bookingorder}`} variant='warning'>Booking Order</Button>
       <hr />
     </>
   )
