@@ -8,7 +8,7 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <>
-      <main>{children}</main>
+      <CookiesProvider><main>{children}</main></CookiesProvider>
     </>
   )
 }
