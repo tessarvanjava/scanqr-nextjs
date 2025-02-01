@@ -16,7 +16,7 @@ const returnUnit = (a) => {
   let CurrentDate = moment().format('YYYY-MM-DD');
   if (a === CurrentDate) {
     return (
-      <span style={returnUnitStyle}>{moment(a).format("dddd, LL")}</span>
+      <span>{moment(a).format("dddd, LL")}</span>
     )
   } else {
     return (
