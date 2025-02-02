@@ -1,14 +1,12 @@
-import { CookiesProvider } from 'next-client-cookies/server';
-
 export const metadata = {
-  title: "Scanning App - Rental Barata Jaya",
-  description: "Scanning App - Rental Barata Jaya",
+  title: "Login - Rental Barata Jaya",
+  description: "Login - Rental Barata Jaya",
 };
 
 export default function Layout({ children }) {
   return (
     <>
-      <CookiesProvider><main>{children}</main></CookiesProvider>
+      <main>{children}</main>
     </>
   )
 }

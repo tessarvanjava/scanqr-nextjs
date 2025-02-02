@@ -11,8 +11,7 @@ import FormSearchByCode from './component/code.js'
 import SendPost from './component/posts.js'
 import FormSearchByIdOrder from './component/idorder.js'
 import TableOrder from './component/order.js'
-
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { hasCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
 function Heading() {
@@ -26,21 +25,12 @@ function Heading() {
 }
 
 function App() {
-  const router = useRouter();
-
+  const router = useRouter()
   useEffect(() => {
-    // Ambil cookies di sisi klien
-    const cookies = parseCookies();
-    const username = cookies.username || null;
-    const password = cookies.password || null;
-
-    if (username === 'tessar' && password === 'maverick') {
-      // Jika username kosong, redirect ke halaman login
-      router.push('/scan'); // Ganti dengan path halaman login Anda
-    } else {
-      router.push('/login');
+    if (hasCookie('user') == false) {
+      router.push('/login')
     }
-  }, [router]);
+  }, [router])
 
   return (
     <div>
