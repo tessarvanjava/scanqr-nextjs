@@ -46,6 +46,10 @@ function ShowAll() {
   if (error) return <Alert variant="danger">Gagal memuat data</Alert>
   if (!data) return <Loading />
 
+  const handleOnClick = () =>{
+    mutate(`${process.env.api}/unit`)
+  }
+
   return (
     <>
       <Head>
@@ -53,7 +57,7 @@ function ShowAll() {
       </Head>
       <h1>Show All</h1>
       <UpdateNotes show={show} handleClose={handleClose} handleShow={handleShow} buttonTitle={'Update'} />
-      <Button size='lg' type='submit' onClick={() => mutate(`${process.env.api}/unit`)}>Refresh Data</Button><br />
+      <Button size='lg' type='submit' onClick={handleOnClick}>Refresh Data</Button><br />
       <hr />
       <Table striped bordered hover responsive>
         <thead>

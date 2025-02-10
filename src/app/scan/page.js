@@ -11,8 +11,10 @@ import FormSearchByCode from './component/code.js'
 import SendPost from './component/posts.js'
 import FormSearchByIdOrder from './component/idorder.js'
 import TableOrder from './component/order.js'
-import { hasCookie } from 'cookies-next'
+import { hasCookie, getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { headers } from 'next/headers.js'
 
 function Heading() {
   return (
@@ -26,10 +28,15 @@ function Heading() {
 
 function App() {
   const router = useRouter()
+  const valueUserCookie = getCookie('user')
   useEffect(() => {
-    if (hasCookie('user') == false) {
-      router.push('/login')
-    }
+    axios.post(`${process.env.api}/api/checkcookie`, {
+      headers: valueUserCookie
+    }).then((res) => {
+      if (res.data.status === 'Success') {
+        console.log('Welcome To Scanning Webpage Rental Barata Jaya')
+      }
+    }).catch(() => router.push('/login'))
   }, [router])
 
   return (

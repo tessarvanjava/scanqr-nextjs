@@ -20,13 +20,12 @@ function Page() {
       headers: { sign: token }
     }).then((res) => {
       console.log(res)
-      if (res.status == 200) {
-        console.log('Go To Scan Page')
-        setCookie('user', username, { maxAge: 3600 * 24 * 3 })
+      if (res.data.message == 'Success') {
+        setCookie('user', token, { domain:'192.168.0.15',path:'/', maxAge: 3600 * 24 * 3 })
+        setCookie('bookingorder', token, { domain:'192.168.0.15',path:'/pemesanan', maxAge: 3600 * 24 * 3 })
         router.push('/scan')
       } else {
-        console.log('Go To Login Page')
-        router.push('/login')
+        console.log('Can Not Login')
       }
     })
   }
