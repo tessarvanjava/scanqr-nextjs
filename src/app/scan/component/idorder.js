@@ -33,7 +33,6 @@ function FormSearchByIdOrder() {
   return (
     <>
       <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
-      <h4>Scan ID Order</h4>
       <Form onSubmit={handleOnSubmit} autoComplete='off'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control required size='lg' type="text" placeholder="ID Customer" onChange={(e) => setIdOrder(e.target.value)} value={idorder} />

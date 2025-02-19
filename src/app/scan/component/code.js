@@ -33,7 +33,6 @@ function FormSearchByCode() {
   return (
     <>
       <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
-      <h4>Scan Code</h4>
       <Form onSubmit={handleOnSbumit} autoComplete='off'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control required size='lg' type="text" placeholder="Code Unit" onChange={(e) => setCode(e.target.value)} value={code} />

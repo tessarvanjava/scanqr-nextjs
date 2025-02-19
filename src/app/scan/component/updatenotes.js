@@ -55,7 +55,7 @@ function UpdateNotes({ handleShow, handleClose, show, buttonTitle }) {
 
   return (
     <>
-      <Button variant="primary" size='lg' onClick={handleShow}>
+      <Button variant="primary" size='md' onClick={handleShow}>
         {buttonTitle}
       </Button>
 

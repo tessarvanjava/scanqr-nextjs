@@ -57,7 +57,7 @@ function ShowAll() {
       </Head>
       <h1>Show All</h1>
       <UpdateNotes show={show} handleClose={handleClose} handleShow={handleShow} buttonTitle={'Update'} />
-      <Button size='lg' type='submit' onClick={handleOnClick}>Refresh Data</Button><br />
+      <Button size='md' type='submit' onClick={handleOnClick}>Refresh Data</Button><br />
       <hr />
       <Table striped bordered hover responsive>
         <thead>

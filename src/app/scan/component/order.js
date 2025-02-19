@@ -53,7 +53,7 @@ function TableOrder() {
         <title>Home</title>
       </Head>
       <h1>Order</h1>
-      <Button size='lg' type='submit' onClick={() => mutate(`${process.env.api}/api/pemesanan/show/1/30`)}>Refresh Data</Button><br />
+      <Button size='md' type='submit' onClick={() => mutate(`${process.env.api}/api/pemesanan/show/1/30`)}>Refresh Data</Button><br />
       <hr />
       <Table striped bordered hover responsive>
         <thead>
