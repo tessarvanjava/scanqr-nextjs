@@ -40,7 +40,6 @@ function SendPost() {
   return (
     <>
       <ShowErrorModal handleClose={handleClose} show={show} />
-      <h4>Scan QrCode</h4>
       <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded" autoComplete='off'>
         <Form.Group className="mb-3">
           <Form.Control required size='lg' type="text" placeholder="Enter ID Order" name='idorder' onChange={(e) => setIdorder(e.target.value)} value={idorder} /><br />

@@ -35,7 +35,7 @@ function FormSearchByIdOrder() {
       <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
       <Form onSubmit={handleOnSubmit} autoComplete='off'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control required size='lg' type="text" placeholder="ID Customer" onChange={(e) => setIdOrder(e.target.value)} value={idorder} />
+          <Form.Control required size='lg' type="text" placeholder="ID Order" onChange={(e) => setIdOrder(e.target.value)} value={idorder} />
         </Form.Group>
         {/* <Form.Text muted>{showError}</Form.Text><br /> */}
         <Button type='submit' variant='primary' size='lg'>Submit</Button><br /><br />
@@ -66,8 +66,8 @@ function FormSearchByIdOrder() {
                 <td>{item.nama}</td>
                 <td>{item.status}</td>
                 <td>{item.notes}</td>
-                <td>{moment(item.created_at).format("dddd, LL")}</td>
-                <td>{item.updated_at ? moment(item.updated_at).format("dddd, LL") : ''}</td>
+                <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
+                <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
               </tr>
             )
           }) : <tr><td colSpan={9}>{showError}</td></tr>}

@@ -86,8 +86,8 @@ function ShowAll() {
                 <td>{item.nama}</td>
                 <td>{item.status}</td>
                 <td>{item.notes}</td>
-                <td>{moment(item.created_at).format("dddd, LL")}</td>
-                <td>{item.updated_at ? moment(item.updated_at).format("dddd, LL") : ''}</td>
+                <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
+                <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
               </tr>
             )
           })}

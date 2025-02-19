@@ -104,7 +104,7 @@ function ModalScanQrcode({ showScanQrCode, setShowScanQrCode }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            Scan Id Customer
+            Scan QrCode
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
