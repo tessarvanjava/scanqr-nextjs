@@ -30,6 +30,14 @@ function FormSearchByCode() {
     setCode('')
   }
 
+  const handleOnDeleteId = (e) => {
+    const id = e.target.value
+    alert(`Delete Success ID ${id}`)
+    axios.delete(`${process.env.api}/api/scan/${id}`).then((res) => {
+      console.log(res)
+    })
+  }
+
   return (
     <>
       <ShowErrorModal handleClose={handleClose} show={show} header={'Need Attention'} message={'Connection Error'} />
@@ -43,6 +51,7 @@ function FormSearchByCode() {
       <Table striped bordered hover responsive>
         <thead>
           <tr>
+            <th>D</th>
             <th>ID</th>
             <th>Code</th>
             <th>ID Order</th>
@@ -58,6 +67,7 @@ function FormSearchByCode() {
           {datas.length >= 1 ? datas.map((item, index) => {
             return (
               <tr key={index}>
+                <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>D</Button></td>
                 <td>{item.id}</td>
                 <td>{item.code}</td>
                 <td>{item.idorder}</td>

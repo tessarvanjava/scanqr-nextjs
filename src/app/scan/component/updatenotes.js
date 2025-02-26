@@ -37,7 +37,7 @@ function FormUpdateNotes() {
       <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded" autoComplete='off'>
         <Form.Group className="mb-3">
           <Form.Control required size='lg' type="text" placeholder="ID" name='id' onChange={(e) => setId(e.target.value)} value={id} /><br />
-          <Form.Control required size='lg' type="text" placeholder="Notes" name='notes' onChange={(e) => setNotes(e.target.value)} value={notes} /><br />
+          <Form.Control required size='lg' as="textarea" rows={5} placeholder="Notes" name='notes' onChange={(e) => setNotes(e.target.value)} value={notes} /><br />
           <Form.Text muted>{showError}</Form.Text>
           <Button size='lg' variant="primary" type="submit">Submit</Button>
         </Form.Group>
@@ -48,10 +48,6 @@ function FormUpdateNotes() {
 
 
 function UpdateNotes({ handleShow, handleClose, show, buttonTitle }) {
-  /* const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); */
 
   return (
     <>
@@ -64,14 +60,6 @@ function UpdateNotes({ handleShow, handleClose, show, buttonTitle }) {
           <Modal.Title>Update Notes By Id</Modal.Title>
         </Modal.Header>
         <Modal.Body><FormUpdateNotes /></Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );
