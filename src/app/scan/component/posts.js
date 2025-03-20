@@ -42,8 +42,8 @@ function SendPost() {
       <ShowErrorModal handleClose={handleClose} show={show} />
       <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded" autoComplete='off'>
         <Form.Group className="mb-3">
-          <Form.Control required size='lg' type="text" placeholder="Enter ID Order" name='idorder' onChange={(e) => setIdorder(e.target.value)} value={idorder} /><br />
-          <Form.Control required size='lg' type="text" placeholder="Enter ID Customer" name='idcustomer' onChange={(e) => setIdCustomer(e.target.value)} value={idcustomer} /><br />
+          <Form.Control required size='lg' type="number" placeholder="Enter ID Order" name='idorder' onChange={(e) => setIdorder(e.target.value)} value={idorder} /><br />
+          <Form.Control required size='lg' type="number" placeholder="Enter ID Customer" name='idcustomer' onChange={(e) => setIdCustomer(e.target.value)} value={idcustomer} /><br />
           <Form.Control required size='lg' type="text" placeholder="Code" name='code' onChange={(e) => setCode(e.target.value)} value={code} /><br />
           <Form.Text muted>{showError}</Form.Text><br />
           <Button size='lg' variant="primary" type="submit">Submit</Button>

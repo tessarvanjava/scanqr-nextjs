@@ -36,7 +36,7 @@ function FormUpdateNotes() {
     <>
       <Form onSubmit={handleOnSubmit} encType="application/x-www-form-urlencoded" autoComplete='off'>
         <Form.Group className="mb-3">
-          <Form.Control required size='lg' type="text" placeholder="ID" name='id' onChange={(e) => setId(e.target.value)} value={id} /><br />
+          <Form.Control required size='lg' type="number" placeholder="ID" name='id' onChange={(e) => setId(e.target.value)} value={id} /><br />
           <Form.Control required size='lg' as="textarea" rows={5} placeholder="Notes" name='notes' onChange={(e) => setNotes(e.target.value)} value={notes} /><br />
           <Form.Text muted>{showError}</Form.Text>
           <Button size='lg' variant="primary" type="submit">Submit</Button>
