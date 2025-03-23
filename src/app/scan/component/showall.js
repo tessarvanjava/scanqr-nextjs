@@ -1,8 +1,8 @@
 'use client'
 
-import { Button, Container, Table, Form, Alert } from 'react-bootstrap'
+import { Button, Container, Table, Form, Alert, Pagination } from 'react-bootstrap'
 import Head from 'next/head'
-import useSWR, { mutate, useSWRConfig } from 'swr'
+import useSWR, { mutate } from 'swr'
 import { useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id'
@@ -10,30 +10,32 @@ import Loading from '../module/loading.js'
 import axios from 'axios'
 import UpdateNotes from '../component/updatenotes.js'
 
-function AlertDelete() {
-  const variant = 'warning'
-  return (
-    <Alert key={variant} variant={variant}>
-      Delete Success id
-    </Alert>
-  )
-}
-
 function ShowAll() {
+  // State untuk halaman aktif
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  // Start Of Modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  // End Of Modal
-
-  // const fetcher = (...args) => fetch(...args).then(res => res.json())
+  // Fetch data dengan SWR
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const url = `${process.env.api}/unit`
   const { data, error, isLoading } = useSWR(url, fetcher, {
     revalidateOnFocus: true,
-    // refreshInterval: 3000  
-  })
+  });
+
+  if (error) return <Alert variant="danger">Gagal memuat data</Alert>
+  if (!data) return <Loading />
+
+  // Hitung total halaman
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  // Ambil data berdasarkan halaman aktif
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+  // Fungsi untuk mengganti halaman
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleOnDeleteId = (e) => {
     const id = e.target.value
@@ -42,9 +44,6 @@ function ShowAll() {
       console.log(res)
     })
   }
-
-  if (error) return <Alert variant="danger">Gagal memuat data</Alert>
-  if (!data) return <Loading />
 
   const handleOnClick = () =>{
     mutate(`${process.env.api}/unit`)
@@ -56,7 +55,7 @@ function ShowAll() {
         <title>Home</title>
       </Head>
       <h1>Show All</h1>
-      <UpdateNotes show={show} handleClose={handleClose} handleShow={handleShow} buttonTitle={'Update'} />
+      <UpdateNotes show={false} handleClose={() => {}} handleShow={() => {}} buttonTitle={'Update'} />
       <Button size='md' type='submit' onClick={handleOnClick}>Refresh Data</Button><br />
       <hr />
       <Table striped bordered hover responsive>
@@ -75,26 +74,47 @@ function ShowAll() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td><center><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>Delete</Button></center></td>
-                <td>{item.id}</td>
-                <td>{item.code}</td>
-                <td>{item.idorder}</td>
-                <td>{item.idpel}</td>
-                <td>{item.nama}</td>
-                <td>{item.status}</td>
-                <td>{item.notes}</td>
-                <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
-                <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
-              </tr>
-            )
-          })}
+          {currentData.map((item, index) => (
+            <tr key={index}>
+              <td><center><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>Delete</Button></center></td>
+              <td>{item.id}</td>
+              <td>{item.code}</td>
+              <td>{item.idorder}</td>
+              <td>{item.idpel}</td>
+              <td>{item.nama}</td>
+              <td>{item.status}</td>
+              <td>{item.notes}</td>
+              <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
+              <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
+
+      {/* Pagination */}
+      <Pagination>
+        <Pagination.Prev 
+          onClick={() => handlePageChange(currentPage - 1)} 
+          disabled={currentPage === 1} 
+        />
+        
+        {[...Array(totalPages)].map((_, i) => (
+          <Pagination.Item 
+            key={i + 1} 
+            active={i + 1 === currentPage} 
+            onClick={() => handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </Pagination.Item>
+        ))}
+        
+        <Pagination.Next 
+          onClick={() => handlePageChange(currentPage + 1)} 
+          disabled={currentPage === totalPages} 
+        />
+      </Pagination>
     </>
   )
 }
 
-export default ShowAll
+export default ShowAll;
