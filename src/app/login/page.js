@@ -1,11 +1,10 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Form, Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import token from '../scan/module/token.js';
-import { getCookie, setCookie, hasCookie } from 'cookies-next';
 
 function Page() {
   const [username, setUsername] = useState('')
@@ -15,20 +14,31 @@ function Page() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
+
     axios.post(`${process.env.api}/api/login`, {
-      data: { username, password },
-      headers: { sign: token }
-    }).then((res) => {
-      console.log(res)
-      if (res.data.message == 'Success') {
-        setCookie('user', token, { domain:'192.168.0.15',path:'/', maxAge: 3600 * 24 * 3 })
-        setCookie('bookingorder', token, { domain:'192.168.0.15',path:'/pemesanan', maxAge: 3600 * 24 * 3 })
+      data: { username, password }
+    },
+      { headers: { sign: token }, withCredentials: true }
+    ).then((res) => {
+      if (res.data === 'Success') {
         router.push('/scan')
-      } else {
-        console.log('Can Not Login')
       }
+    }).catch((err) => {
+      console.log(err)
     })
   }
+
+  // Check Cookies
+  useEffect(() => {
+    axios.get(`${process.env.api}/api/get-cookie`, {
+      withCredentials: true
+    }).then((res) => {
+      if(res){
+        router.push('/scan')
+      }
+    }).catch(() => router.push('/login'))
+  })
+
 
   return (
     <>

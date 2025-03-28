@@ -142,16 +142,15 @@ function Heading() {
 
 function App() {
   const router = useRouter()
-  const valueUserCookie = getCookie('user')
   useEffect(() => {
-    axios.post(`${process.env.api}/api/checkcookie`, {
-      headers: valueUserCookie
+    axios.get(`${process.env.api}/api/get-cookie`, {
+      withCredentials: true
     }).then((res) => {
-      if (res.data.status === 'Success') {
+      if(res){
         console.log('Welcome To Scanning Webpage Rental Barata Jaya')
       }
     }).catch(() => router.push('/login'))
-  }, [router])
+  })
 
   return (
     <div>

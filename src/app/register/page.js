@@ -16,12 +16,13 @@ function Page() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    axios.post(url, {
-      data: { username, password },
-      headers: { sign: token }
+    axios.post(url,
+      { data: { username, password } }, { headers: { sign: token } }
+    ).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
     })
-    
-    // router.push('/login')
   }
 
   return (
