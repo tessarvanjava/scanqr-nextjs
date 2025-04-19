@@ -1,5 +1,6 @@
 'use client'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Table, Form, Alert } from 'react-bootstrap'
 import useSWR, { mutate } from 'swr'
 import moment from 'moment'

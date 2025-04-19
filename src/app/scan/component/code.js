@@ -25,9 +25,15 @@ function FormSearchByCode() {
     e.preventDefault();
     axios.get(`${process.env.api}/unit/code/${code}`)
       .then((res) => {
-        setDatas(res.data);
-        setShowError(res.data.error);
-        setCurrentPage(1); // Reset ke halaman pertama setelah pencarian baru
+        const responseData = res.data;
+        if (Array.isArray(responseData)) {
+          setDatas(responseData);
+          setShowError('');
+        } else {
+          setDatas([]);
+          setShowError('Data Has No Record');
+        }
+        setCurrentPage(1);
       })
       .catch((error) => {
         setShow(true);
@@ -61,19 +67,19 @@ function FormSearchByCode() {
       {/* Pagination Controls */}
       {datas.length > itemsPerPage && (
         <div className="d-flex justify-content-center mt-3">
-          <Button 
-            variant="secondary" 
-            onClick={() => setCurrentPage(currentPage - 1)} 
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Previous
           </Button>
-          
+
           <span className="mx-3">Page {currentPage} of {totalPages}</span>
 
-          <Button 
-            variant="secondary" 
-            onClick={() => setCurrentPage(currentPage + 1)} 
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             Next
@@ -81,7 +87,7 @@ function FormSearchByCode() {
         </div>
       )}
 
-      <br/>
+      <br />
 
       <Table striped bordered hover responsive>
         <thead>
@@ -99,20 +105,24 @@ function FormSearchByCode() {
           </tr>
         </thead>
         <tbody>
-          {currentData.length > 0 ? currentData.map((item, index) => (
-            <tr key={index}>
-              <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>D</Button></td>
-              <td>{item.id}</td>
-              <td>{item.code}</td>
-              <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
-              <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
-              <td>{item.nama}</td>
-              <td>{item.status}</td>
-              <td>{item.notes}</td>
-              <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
-              <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
-            </tr>
-          )) : <tr><td colSpan={10}>{showError}</td></tr>}
+          {Array.isArray(currentData) && currentData.length > 0 ? (
+            currentData.map((item, index) => (
+              <tr key={index}>
+                <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>D</Button></td>
+                <td>{item.id}</td>
+                <td>{item.code}</td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
+                <td>{item.nama}</td>
+                <td>{item.status}</td>
+                <td>{item.notes}</td>
+                <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
+                <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
+              </tr>
+            ))
+          ) : (
+            <tr><td colSpan={10}>{showError}</td></tr>
+          )}
         </tbody>
       </Table>
     </>

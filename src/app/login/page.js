@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import token from '../scan/module/token.js';
@@ -33,11 +33,14 @@ function Page() {
     axios.get(`${process.env.api}/api/get-cookie`, {
       withCredentials: true
     }).then((res) => {
-      if(res){
+
+      if (res.data.username) {
         router.push('/scan')
+      } else {
+        router.push('/login')
       }
     }).catch(() => router.push('/login'))
-  })
+  }, [])
 
 
   return (

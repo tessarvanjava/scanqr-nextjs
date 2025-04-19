@@ -72,8 +72,15 @@ function TableOrder() {
         <tbody>
           {data.map((item) =>
             <tr key={item.id_pemesanan}>
-              <td>{item.id_pemesanan}</td>
-              <td>{item.id_pelanggan}</td>
+              <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.id_pemesanan}`}>
+                {item.id_pemesanan}
+              </a>
+              </td>
+              <td>
+                <a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.id_pelanggan}`}>
+                  {item.id_pelanggan}
+                </a>
+              </td>
               <td>{item.nama}</td>
               <td>{item.status_bayar}</td>
               <td><a style={{ color: 'black' }} href={`/scan?idorder=${item.id_pemesanan}&idcustomer=${item.id_pelanggan}`}>{item.unit}</a></td>

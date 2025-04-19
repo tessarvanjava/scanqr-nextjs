@@ -71,8 +71,8 @@ function FormSearchByIdCustomer() {
                 <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>D</Button></td>
                 <td>{item.id}</td>
                 <td>{item.code}</td>
-                <td>{item.idorder}</td>
-                <td>{item.idpel}</td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
                 <td>{item.nama}</td>
                 <td>{item.status}</td>
                 <td>{item.notes}</td>

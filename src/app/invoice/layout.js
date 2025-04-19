@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const metadata = {
-  title: "Login - Rental Barata Jaya",
-  description: "Login - Rental Barata Jaya",
+  title: "Invoice - Rental Barata Jaya",
+  description: "invoice - Rental Barata Jaya",
 };
 
 export default function Layout({ children }) {

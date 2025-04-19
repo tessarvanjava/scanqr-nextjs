@@ -11,6 +11,8 @@ import axios from 'axios'
 import UpdateNotes from '../component/updatenotes.js'
 
 function ShowAll() {
+  const [showModal, setShowModal] = useState(false);
+
   // State untuk halaman aktif
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -55,7 +57,7 @@ function ShowAll() {
         <title>Home</title>
       </Head>
       <h1>Show All</h1>
-      <UpdateNotes show={false} handleClose={() => {}} handleShow={() => {}} buttonTitle={'Update'} />
+      <UpdateNotes show={showModal} handleClose={() => setShowModal(false)} handleShow={() => setShowModal(true)} buttonTitle={'Update'} />
       <Button size='md' type='submit' onClick={handleOnClick}>Refresh Data</Button><br />
       <hr />
       <Table striped bordered hover responsive>
@@ -79,8 +81,8 @@ function ShowAll() {
               <td><center><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>Delete</Button></center></td>
               <td>{item.id}</td>
               <td>{item.code}</td>
-              <td>{item.idorder}</td>
-              <td>{item.idpel}</td>
+              <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
               <td>{item.nama}</td>
               <td>{item.status}</td>
               <td>{item.notes}</td>
