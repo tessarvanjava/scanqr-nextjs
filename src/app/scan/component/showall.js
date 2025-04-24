@@ -41,13 +41,21 @@ function ShowAll() {
 
   const handleOnDeleteId = (e) => {
     const id = e.target.value
-    alert(`Delete Success ID ${id}`)
     axios.delete(`${process.env.api}/api/scan/${id}`).then((res) => {
-      console.log(res)
+      console.log("Success Delete")
+    }).catch((err) => {
+      alert("Failed To Delete")
     })
+
+    axios.get(`${process.env.api}/unit`).then((res) => {
+      console.log("Success Fetch")
+    }).catch((err) => {
+      console.log(err)
+    })
+    alert(`Delete Success ID ${id}`)
   }
 
-  const handleOnClick = () =>{
+  const handleOnClick = () => {
     mutate(`${process.env.api}/unit`)
   }
 
@@ -82,7 +90,7 @@ function ShowAll() {
               <td>{item.id}</td>
               <td>{item.code}</td>
               <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
-                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
+              <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
               <td>{item.nama}</td>
               <td>{item.status}</td>
               <td>{item.notes}</td>
@@ -95,24 +103,24 @@ function ShowAll() {
 
       {/* Pagination */}
       <Pagination>
-        <Pagination.Prev 
-          onClick={() => handlePageChange(currentPage - 1)} 
-          disabled={currentPage === 1} 
+        <Pagination.Prev
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
         />
-        
+
         {[...Array(totalPages)].map((_, i) => (
-          <Pagination.Item 
-            key={i + 1} 
-            active={i + 1 === currentPage} 
+          <Pagination.Item
+            key={i + 1}
+            active={i + 1 === currentPage}
             onClick={() => handlePageChange(i + 1)}
           >
             {i + 1}
           </Pagination.Item>
         ))}
-        
-        <Pagination.Next 
-          onClick={() => handlePageChange(currentPage + 1)} 
-          disabled={currentPage === totalPages} 
+
+        <Pagination.Next
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
         />
       </Pagination>
     </>
