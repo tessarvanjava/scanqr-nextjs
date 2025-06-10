@@ -100,7 +100,6 @@ function FormSearchByCode() {
             <th>Nama</th>
             <th>Status</th>
             <th>Notes</th>
-            <th>Created</th>
             <th>Updated</th>
           </tr>
         </thead>
@@ -111,12 +110,11 @@ function FormSearchByCode() {
                 <td><Button type='submit' variant='danger' onClick={handleOnDeleteId} value={item.id}>D</Button></td>
                 <td>{item.id}</td>
                 <td>{item.code}</td>
-                <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.idorder}`}>{item.idorder}</a></td>
-                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.idpel}`}>{item.idpel}</a></td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/single/${item.idorder}`}>{item.idorder}</a></td>
+                <td><a target='blank' href={`${process.env.bookingorder}/pelanggan/single/${item.idpel}`}>{item.idpel}</a></td>
                 <td>{item.nama}</td>
                 <td>{item.status}</td>
                 <td>{item.notes}</td>
-                <td>{moment(item.created_at).format("dddd, DD MMMM YYYY - HH:mm:ss")}</td>
                 <td>{item.updated_at ? moment(item.updated_at).format("dddd, DD MMMM YYYY - HH:mm:ss") : ''}</td>
               </tr>
             ))

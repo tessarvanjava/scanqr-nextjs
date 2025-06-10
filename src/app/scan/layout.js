@@ -159,7 +159,7 @@ export default function Layout({ children }) {
     axios.get(`${process.env.api}/api/get-cookie`, {
       withCredentials: true
     }).then((res) => {
-      if (res.data.username) {
+      if (res.data.cookie.username) {
         console.log('Welcome to Webpage Rental Barata Jaya')
       } else {
         router.push('/login')

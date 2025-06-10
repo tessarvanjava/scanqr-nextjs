@@ -18,7 +18,7 @@ function Page() {
     axios.post(`${process.env.api}/api/login`, {
       data: { username, password }
     },
-      { headers: { sign: token }, withCredentials: true }
+      { headers: { sign: process.env.token }, withCredentials: true }
     ).then((res) => {
       if (res.data === 'Success') {
         router.push('/scan')
@@ -33,8 +33,7 @@ function Page() {
     axios.get(`${process.env.api}/api/get-cookie`, {
       withCredentials: true
     }).then((res) => {
-
-      if (res.data.username) {
+      if (res.data.cookie.username) {
         router.push('/scan')
       } else {
         router.push('/login')

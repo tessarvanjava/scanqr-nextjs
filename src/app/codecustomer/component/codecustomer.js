@@ -23,14 +23,16 @@ function currency(value) {
 function CodeCustomer() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-  const [count,setCount]  = useState();
+  const [count, setCount] = useState();
+  const [totalBayar, setTotalBayar] = useState();
 
   useEffect(() => {
     axios.get(`${process.env.api}/api/order/${id}`).then((res) => {
       setCount(res.data.count)
+      setTotalBayar(res.data.total_bayar)
     })
   })
-  
+
   const url = `${process.env.api}/api/order/${id}`;
   const { data, error } = useSWR(url, fetcher, { revalidateOnFocus: true });
 
@@ -48,23 +50,26 @@ function CodeCustomer() {
 
   return (
     <>
-      <h1>Code Customer</h1>
       {/* <Button size='lg' type='submit' onClick={() => { mutate(); setCurrentPage(1); }}>Refresh Data</Button>
       <br /> */}
       <h2>Total Record : {count}</h2>
+      <h2>Total Pembayaran : {currency(totalBayar)}</h2>
       <hr />
-      
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
+
+      <Table striped bordered hover responsive style={{ fontSize: 15 }}>
+        <thead style={{ fontSize: 16, backgroundColor: "black", color: "white" }}>
+          <tr >
             <th>ID Order</th>
             <th>Nama</th>
             <th>Unit</th>
             <th>Total</th>
+            <th>Event</th>
+            <th>Lokasi Kegiatan</th>
             <th>a.tgl</th>
             <th>a.jam</th>
             <th>k.tgl</th>
             <th>k.jam</th>
+            <th>Catatan</th>
           </tr>
         </thead>
         <tbody>
@@ -74,10 +79,13 @@ function CodeCustomer() {
               <td>{item.nama}</td>
               <td>{item.unit}</td>
               <td>{currency(item.total_bayar)}</td>
+              <td>{item.kegiatan}</td>
+              <td>{item.lokasikegiatan}</td>
               <td>{returnUnit(item.ambil_tgl)}</td>
               <td>{item.ambil_jam}</td>
               <td>{returnUnit(item.kembali_tgl)}</td>
               <td>{item.kembali_jam}</td>
+              <td>{item.catatan}</td>
             </tr>
           ))}
         </tbody>
@@ -86,19 +94,19 @@ function CodeCustomer() {
       {/* Pagination Controls */}
       {data.length > itemsPerPage && (
         <div className="d-flex justify-content-center mt-3">
-          <Button 
-            variant="secondary" 
-            onClick={() => setCurrentPage(currentPage - 1)} 
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Previous
           </Button>
-          
+
           <span className="mx-3">Page {currentPage} of {totalPages}</span>
 
-          <Button 
-            variant="secondary" 
-            onClick={() => setCurrentPage(currentPage + 1)} 
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             Next

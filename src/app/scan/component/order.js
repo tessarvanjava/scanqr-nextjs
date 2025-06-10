@@ -72,12 +72,12 @@ function TableOrder() {
         <tbody>
           {data.map((item) =>
             <tr key={item.id_pemesanan}>
-              <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/${item.id_pemesanan}`}>
+              <td><a target='blank' href={`${process.env.bookingorder}/pemesanan/single/${item.id_pemesanan}`}>
                 {item.id_pemesanan}
               </a>
               </td>
               <td>
-                <a target='blank' href={`${process.env.bookingorder}/pelanggan/${item.id_pelanggan}`}>
+                <a target='blank' href={`${process.env.bookingorder}/pelanggan/single/${item.id_pelanggan}`}>
                   {item.id_pelanggan}
                 </a>
               </td>
