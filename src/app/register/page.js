@@ -10,6 +10,7 @@ import token from '../../app/scan/module/token.js'
 function Page() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('')
 
   // const router = useRouter()
   const url = `${process.env.api}/api/register`
@@ -17,9 +18,14 @@ function Page() {
   const handleOnSubmit = (e) => {
     e.preventDefault()
     axios.post(url,
-      { data: { username, password } }, { headers: { sign: token } }
+      { data: { username, password, role } }, { headers: { sign: token } }
     ).then((res) => {
       console.log(res)
+      if (res.data.status == false) {
+        alert(res.data.message)
+      } else {
+        alert(res.data.message)
+      }
     }).catch((err) => {
       console.log(err)
     })
@@ -41,7 +47,16 @@ function Page() {
               <Form.Control autoComplete='off' name='password' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} />
               <Form.Text id="passwordHelpBlock" muted>
                 Enter Your Password
-              </Form.Text><br /><br />
+              </Form.Text>
+              <Form.Group controlId="formBasicSelect" className="mt-3">
+                <Form.Label>Select Role</Form.Label>
+                <Form.Select onChange={(e) => setRole(e.target.value)} defaultValue="" required>
+                  <option value="">Choose...</option>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </Form.Select>
+              </Form.Group>
+              <br /><br />
               <Button variant='primary' type='submit'>Submit</Button>
             </Form>
           </Col>

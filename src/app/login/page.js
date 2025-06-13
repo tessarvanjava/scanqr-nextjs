@@ -9,6 +9,7 @@ import token from '../scan/module/token.js';
 function Page() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [token, setToken] = useState('')
 
   const router = useRouter()
 
@@ -16,11 +17,14 @@ function Page() {
     e.preventDefault()
 
     axios.post(`${process.env.api}/api/login`, {
-      data: { username, password }
+      data: { username, password, token }
     },
       { headers: { sign: process.env.token }, withCredentials: true }
     ).then((res) => {
-      if (res.data === 'Success') {
+      console.log(res.data)
+      if (res.data.status === false) {
+        alert(res.data.message)
+      } else {
         router.push('/scan')
       }
     }).catch((err) => {
@@ -58,7 +62,13 @@ function Page() {
               <Form.Control required type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} />
               <Form.Text id="passwordHelpBlock" muted>
                 Enter Your Password
-              </Form.Text><br /><br />
+              </Form.Text><br />
+              <Form.Label htmlFor="inputPassword5">Token</Form.Label>
+              <Form.Control required type="number" placeholder='Token' onChange={(e) => setToken(e.target.value)} value={token} />
+              <Form.Text id="passwordHelpBlock" muted>
+                Enter Your Token
+              </Form.Text>
+              <br /><br />
               <Button variant='primary' type='submit'>Submit</Button>
               {/* <Button variant='primary' onClick={handleRemoveCookies}>Remove Cookies</Button> */}
             </Form>
