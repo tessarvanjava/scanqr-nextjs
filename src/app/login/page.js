@@ -4,12 +4,20 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 import { Form, Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import token from '../scan/module/token.js';
 
 function Page() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [csrf, setCrsf] = useState('')
   const [token, setToken] = useState('')
+
+  // Mengambil token csrf
+  useEffect(() => {
+    axios.get(`${process.env.api}/csrf`, { withCredentials: true }).then((res) => {
+      console.log(res.data.csrf_token)
+      setCrsf(res.data.csrf_token)
+    })
+  }, [])
 
   const router = useRouter()
 
@@ -19,7 +27,7 @@ function Page() {
     axios.post(`${process.env.api}/api/login`, {
       data: { username, password, token }
     },
-      { headers: { sign: process.env.token }, withCredentials: true }
+      { headers: { 'csrf-token': csrf, sign: process.env.token }, withCredentials: true }
     ).then((res) => {
       console.log(res.data)
       if (res.data.status === false) {
