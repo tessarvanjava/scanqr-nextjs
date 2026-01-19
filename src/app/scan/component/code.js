@@ -31,12 +31,13 @@ function FormSearchByCode() {
           setShowError('');
         } else {
           setDatas([]);
-          setShowError('Data Has No Record');
+          setShowError(responseData.error || 'No data found');
         }
         setCurrentPage(1);
       })
       .catch((error) => {
         setShow(true);
+        setShowError(error)
       });
     setCode('');
   };
